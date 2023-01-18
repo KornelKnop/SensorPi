@@ -1,0 +1,8 @@
+
+.icon-home:before { content: '\e800'; } /* '' */
+.icon-temperatire:before { content: '\e801'; } /* '' */
+.icon-left:before { content: '\e802'; } /* '' */
+.icon-chart-bar:before { content: '\e803'; } /* '' */
+.icon-water:before { content: '\e804'; } /* '' */
+.icon-arrows-cw:before { content: '\e805'; } /* '' */
+.icon-chart-line:before { content: '\f201'; } /* '' */

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rejestruj</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            color: black;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+
+        }
+
+        nav {
+            height: 20vh;
+            width: 100vw;
+            border-bottom: 1px solid black;
+            background-image: url("static/jpg/logo.png");
+            background-position:center;
+            background-size: 35%;
+            background-repeat: no-repeat;
+            background-color: #ccc;
+        }
+
+        main {
+            background-color: #33435E;
+            height: 70vh;
+            width: 100vw;
+            text-align: center;
+            padding: 10px;
+        }
+
+
+        form {
+            padding: 20px;
+            margin-top: 50px;
+        }
+
+        input{
+            height: 3vh;
+            background-color: #909AAB;
+            height: 25px;
+            /* margin-top: 10px; */
+            padding: 10px;
+            font-size: 15px;
+        }
+        p{
+            margin-bottom: 10px;
+        }
+        img{
+            background-image: ;
+        }
+        .loginButton {
+            width: 40vw;
+            height: 2.7rem;
+            box-shadow: 0px 10px 14px -7px #3e7327;
+            background: linear-gradient(to bottom, #77b55a 5%, #72b352 100%);
+            background-color: #77b55a;
+            border-radius: 4px;
+            border: 1px solid #4b8f29;
+            display: inline-block;
+            cursor: pointer;
+            color: #ffffff;
+            font-family: Arial;
+            font-size: 20px;
+            font-weight: bold;
+            padding: 6px 12px;
+            text-decoration: none;
+            text-shadow: 0px 1px 0px #5b8a3c;
+            margin-top: 50px;
+        }
+
+        .loginButton:hover {
+            background: linear-gradient(to bottom, #579e37 5%, #77b55a 100%);
+            background-color: #579e37;
+        }
+
+        footer {
+            width: 100vw;
+            background-color: #909AAB;
+            height: 10vh;
+            text-align: center;
+            line-height: 4.9vh;
+            border-top: 1px solid black;
+
+        }
+    </style>
+</head>
+
+<body>
+    <nav> </nav>
+    <main>
+        <h1>Witamy w aplikacji!</h1>
+	{% with messages = get_flashed_messages() %}
+	{% if messages %}
+  	  <div class="notification is-danger">
+      	  {{ messages[0] }}. Go to <a href="{{ url_for('auth.login') }}">login page</a>.
+    		</div>
+	{% endif %}
+	{% endwith %}
+        <form method="POST" action="/signup">
+            <div class="field">
+                <div class="control">
+                    <input class="input is-large" type="email" name="email" placeholder="Email" autofocus="">
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="control">
+                    <input class="input is-large" type="text" name="name" placeholder="Nazwa" autofocus="">
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="control">
+                    <input class="input is-large" type="password" name="password" placeholder="Haslo">
+                </div>
+            </div>
+
+            <button class="button is-block is-info is-large is-fullwidth">Rejestruj sie</button>
+         </form>
+    </main>
+    <footer></footer>
+</body>
+
+</html>

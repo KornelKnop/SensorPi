@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Bieżące dane</title>
+    
+    <link rel="stylesheet" href="static/css/fontello.css">
+    <link rel="stylesheet" href="static/css/now.css">
+    <link type="text/css">
+    
+</head>
+
+<body>
+    <nav>
+        <a href="/wykres" class="ico"><i class="icon-chart-line"></i>Wykres</a>
+        <a href="/stat" class="ico"><i class="icon-chart-bar"></i> Statystyki</a>
+        
+    </nav>
+    <main>
+        <section class="results">
+            <p><i class="icon-temperatire"></i>Temperatura: <span> {{temperature}} °C</span></p>
+            <p><i class="icon-water"></i> Wilgotność: <span> {{humidity}}% RH</span> </p>
+            <p><i class=" icon-chart-line"></i> Ciśnienie: <span>{{pressure}} hPa </span> </p>
+            <input  type="button" class="refresh" value="Odśwież" onClick="location.reload();" />
+        </section>
+    </main>
+    <footer>
+        <div class="info">Praca inżynierska - Informatyka w biznesie - 2020</div>
+        <div class="dane">Autorzy: Daniel Gorzka, Iwo Banaszak, Kornel Knop, Norbert Książek</div>
+    </footer>
+
+</body>
+
+</html>
+

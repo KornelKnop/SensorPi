@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <link rel="stylesheet" href="static/css/stat.css">
+    <link rel="stylesheet" href="static/css/fontello.css">
+    <link type="text/css">
+    <title>Statystyki</title>
+   
+
+</head>
+
+
+<body>
+    <nav>
+
+        <a href="/" class="ico"><i class="icon-left"></i>Powrót</a>
+        <a href="/stat" class="ico"><i class="icon-chart-bar"></i> Statystyki</a>
+
+    </nav>
+    <main>
+        <section class="temp">
+            <h1>TEMPERATURA</h1>
+            <p><span class="max">MAKSYMALNA: </span><span class="value">{{tempSensHumMax}}</span></p>
+            <p><span class="ave">ŚREDNIA: </span><span class="value"> {{tempSensHumAvg}}</span></p>
+            <p><span class="min">MINIMALNA: </span><span class="value">{{tempSensHumMin}}</span></p>
+        </section>
+        <section class="humidity">
+            <h1>WILGOTNOŚĆ</h1>
+            <p><span class="max">MAKSYMALNA: </span>
+                <span class="value"> {{humSensMax}}</span></p>
+            <p><span class="ave">ŚREDNIA: </span>
+                <span class="value"> {{humSensAvg}}</span></p>
+            <p><span class="min">MINIMALNA: </span>
+                <span class="value"> {{humSensMin}}</span></p>
+        </section>
+        <section class="pressure">
+            <h1>CIŚNIENIE</h1>
+            <p><span class="max">MAKSYMALNA:</span>
+                <span class="value"> {{presSensMax}}</span></p>
+            <p><span class="ave">ŚREDNIA:</span>
+                <span class="value"> {{presSensAvg}}</span></p>
+            <p><span class="min">MINIMALNA:</span>
+                <span class="value"> {{presSensMin}}</span></p>
+        </section>
+       
+    </main>
+    <footer>
+        <div class="info">Praca inżynierska - Informatyka w biznesie - 2020</div>
+        <div class="dane">Autorzy: Daniel Gorzka, Iwo Banaszak, Kornel Knop, Norbert Książek</div>
+    </footer>
+</body>
+
+</html>

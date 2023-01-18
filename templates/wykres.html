@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Wykresy</title>
+    <link rel="stylesheet" href="static/css/wykres.css">
+    <link rel="stylesheet" href="static/css/fontello.css">
+    <script src='static/moment.min.js'></script>
+    <script src='static/Chart.min.js'></script>
+</head>
+
+<body>
+     <nav>
+
+        <a href="/" class="ico"><i class="icon-left"></i>Powrót</a>
+        <a href="/wykres" class="ico"><i class="icon-chart-line"></i>Wykres</a>
+
+    </nav>
+
+   <main>
+     <div class="gen">
+        <h2 style="font-size: 20px">Wykresy {{HeadTime}}</h2>
+        <p style="font-size: 15px">Data wygenerowania wykresu: <span id='date' style="font-size: 15px"></span></p>
+
+        <form method="post">
+            <select class="styled-select" name="timespan_select" style="width:200px; height: 28px; color:black; font-size: 15px;">
+         <option {% if selectTime == 'hour' %}selected{% endif %} value="hour"; style="width:200px; height: 28px; color:black; font-size: 15px;">ostatnia godzina</option>       
+         <option {% if selectTime == 'day' %}selected{% endif %} value="day"; style="width:200px; height: 28px; color:black; font-size: 15px;">ostatnia doba</option>
+         <option {% if selectTime == 'week' %}selected{% endif %} value="week"; style="width:200px; height: 28px; color:black; font-size: 15px;">ostatni tydzień</option>
+         <option {% if selectTime == 'month' %}selected{% endif %} value="month"; style="width:200px; height: 28px; color:black; font-size: 15px;">ostatni miesiąc</option>
+            </select>
+                <input type="submit" class="button chart" style="width:200px; height: 28px; color:black; font-size: 15px;" value="Generuj wykresy">
+        </form>
+    </div>
+        
+                <h3 style="padding:16px; font-size:20px; color:#383838;">Wilgotność {{HeadTime}}</h3>
+                <canvas id="HumidityChart" width="100%" height="30vh"></canvas>
+        
+        
+                <h3 style="padding:16px; font-size:20px; color:#383838;">Temperatura {{HeadTime}}</h3>
+                <canvas id="TemperatureChart" width="100%" height="30vh"></canvas>
+        
+        
+                <h3 style="padding:16px; font-size:20px; color:#383838;">Ciśnienie {{HeadTime}}</h3>
+                <canvas id="PressureChart" width="100%" height="30vh"></canvas>
+
+       
+    </main>
+
+    <script>
+
+        
+        var d = new Date().toLocaleString('pl-PL');
+        document.getElementById("date").innerHTML = d;
+
+        var chartOptions = {
+            responsive: true,
+            scales: {
+                xAxes: [{
+                    type: 'time',
+                    time: {
+                        displayFormats: {
+                            minute: 'dddd HH:mm',
+                            hour: 'dddd HH:mm',
+                            day: 'HH:mm Do MMM YYYY',
+                            month: 'Do MMM YYYY'
+                        }
+                    }
+                }]
+            }
+        }
+
+        var temperatureData = {
+            labels: [{% for item in labels %}"{{item}}",{% endfor %}],
+            datasets: [{
+                label: "Tepmeratura w °C",
+                fill: false,
+                lineTension: 0.1,
+                borderColor: "rgba(255,0,0,1)",
+                borderCapStyle: 'square',
+                borderDash: [],
+                borderDashOffset: 0.0,
+                borderJoinStyle: 'miter',
+                pointBorderColor: "rgba(255,0,0,1)",
+                pointBackgroundColor: "#fff",
+                pointBorderWidth: 1,
+                pointHoverRadius: 5,
+                pointHoverBackgroundColor: "rgba(255,0,0,1)",
+                pointHoverBorderColor: "rgba(255,0,0,1)",
+                pointHoverBorderWidth: 2,
+                pointRadius: 1,
+                pointHitRadius: 10,
+                data: [{% for item in tempHum %}{{item}},{% endfor %}],
+                spanGaps: false,
+            }]
+        };
+
+        var pressureData = {
+            labels: [{% for item in labels %}"{{item}}",{% endfor %}],
+            datasets: [{
+                label: "Ciśnienie atmosferyczne w hPa",
+                fill: false,
+                lineTension: 0.1,
+                borderColor: "rgba(255,255,0,1)",
+                borderCapStyle: 'square',
+                borderDash: [],
+                borderDashOffset: 0.0,
+                borderJoinStyle: 'miter',
+                pointBorderColor: "rgba(255,255,0,1)",
+                pointBackgroundColor: "#fff",
+                pointBorderWidth: 1,
+                pointHoverRadius: 5,
+                pointHoverBackgroundColor: "rgba(255,255,0,1)",
+                pointHoverBorderColor: "rgba(255,255,0,1)",
+                pointHoverBorderWidth: 2,
+                pointRadius: 1,
+                pointHitRadius: 10,
+                data: [{% for item in pressure %}{{item}},{% endfor %}],
+                spanGaps: false,
+            }]
+        };
+        var humidityData = {
+            labels: [{% for item in labels %}"{{item}}",{% endfor %}],
+            datasets: [{
+                label: "Wilgotność w %",
+                fill: false,
+                lineTension: 0.1,
+                borderColor: "rgba(0,128,255,1)",
+                borderCapStyle: 'square',
+                borderDash: [],
+                borderDashOffset: 0.0,
+                borderJoinStyle: 'miter',
+                pointBorderColor: "rgba(0,128,255,1)",
+                pointBackgroundColor: "#fff",
+                pointBorderWidth: 1,
+                pointHoverRadius: 5,
+                pointHoverBackgroundColor: "rgba(0,128,255,1)",
+                pointHoverBorderColor: "rgba(0,128,255,1)",
+                pointHoverBorderWidth: 2,
+                pointRadius: 1,
+                pointHitRadius: 10,
+                data: [{% for item in humidity %}{{item}},{% endfor %}],
+                spanGaps: false,
+            }]
+        };
+        var ctxTemperature = document.getElementById("TemperatureChart");
+        var myLineChart = Chart.Line(ctxTemperature, {
+            data: temperatureData,
+            options: chartOptions
+        });
+
+        var ctxHumidity = document.getElementById("HumidityChart");
+        var myLineChart = Chart.Line(ctxHumidity, {
+            data: humidityData,
+            options: chartOptions
+        });
+
+        var ctxPressure = document.getElementById("PressureChart");
+        var myLineChart = Chart.Line(ctxPressure, {
+            data: pressureData,
+            options: chartOptions
+        });
+    </script>
+
+</body>
+
+</html>
