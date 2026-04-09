@@ -4,131 +4,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rejestruj</title>
+    <title>SensorPi — Rejestracja</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            color: black;
+        :root {
+            --bg0: #0b1220;
+            --text0: rgba(255, 255, 255, 0.92);
+            --text1: rgba(255, 255, 255, 0.72);
+            --text2: rgba(255, 255, 255, 0.55);
+            --card: rgba(255, 255, 255, 0.04);
+            --border: rgba(255, 255, 255, 0.07);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+            --radius: 16px;
+            --accent: #7aa2ff;
+            --bad: #ff5577;
         }
+
+        * { box-sizing: border-box; }
 
         body {
-            display: flex;
-            flex-direction: column;
-
+            margin: 0;
+            min-height: 100vh;
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+            color: var(--text0);
+            background:
+              radial-gradient(1200px 900px at 15% 0%, rgba(122, 162, 255, 0.20), transparent 55%),
+              radial-gradient(900px 700px at 80% 20%, rgba(53, 208, 127, 0.12), transparent 55%),
+              linear-gradient(180deg, #070b14, var(--bg0));
+            display: grid;
+            place-items: center;
+            padding: 22px;
         }
 
-        nav {
-            height: 20vh;
-            width: 100vw;
-            border-bottom: 1px solid black;
-            background-image: url("static/jpg/logo.png");
-            background-position:center;
-            background-size: 35%;
-            background-repeat: no-repeat;
-            background-color: #ccc;
+        .card {
+            width: min(560px, 100%);
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 18px;
         }
 
-        main {
-            background-color: #33435E;
-            height: 70vh;
-            width: 100vw;
-            text-align: center;
-            padding: 10px;
+        .title { font-weight: 800; font-size: 20px; }
+        .subtitle { margin-top: 6px; color: var(--text2); font-size: 12px; }
+
+        form { margin-top: 14px; display: grid; gap: 10px; }
+
+        label { display: block; color: var(--text1); font-size: 12px; margin-bottom: 6px; }
+
+        input[type="text"], input[type="password"], input[type="email"] {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            background: rgba(0, 0, 0, 0.18);
+            color: var(--text0);
+            outline: none;
         }
 
-
-        form {
-            padding: 20px;
-            margin-top: 50px;
-        }
-
-        input{
-            height: 3vh;
-            background-color: #909AAB;
-            height: 25px;
-            /* margin-top: 10px; */
-            padding: 10px;
-            font-size: 15px;
-        }
-        p{
-            margin-bottom: 10px;
-        }
-        img{
-            background-image: ;
-        }
-        .loginButton {
-            width: 40vw;
-            height: 2.7rem;
-            box-shadow: 0px 10px 14px -7px #3e7327;
-            background: linear-gradient(to bottom, #77b55a 5%, #72b352 100%);
-            background-color: #77b55a;
-            border-radius: 4px;
-            border: 1px solid #4b8f29;
-            display: inline-block;
+        .btn {
             cursor: pointer;
-            color: #ffffff;
-            font-family: Arial;
-            font-size: 20px;
-            font-weight: bold;
-            padding: 6px 12px;
-            text-decoration: none;
-            text-shadow: 0px 1px 0px #5b8a3c;
-            margin-top: 50px;
+            border-radius: 12px;
+            border: 1px solid rgba(122, 162, 255, 0.35);
+            background: rgba(122, 162, 255, 0.15);
+            color: rgba(122, 162, 255, 1);
+            font-weight: 800;
+            padding: 10px 12px;
         }
 
-        .loginButton:hover {
-            background: linear-gradient(to bottom, #579e37 5%, #77b55a 100%);
-            background-color: #579e37;
-        }
+        .btn:hover { background: rgba(122, 162, 255, 0.22); }
 
-        footer {
-            width: 100vw;
-            background-color: #909AAB;
-            height: 10vh;
-            text-align: center;
-            line-height: 4.9vh;
-            border-top: 1px solid black;
+        .row { display: flex; gap: 12px; align-items: center; justify-content: space-between; flex-wrap: wrap; margin-top: 6px; }
 
-        }
+        .link { color: rgba(255, 255, 255, 0.75); font-size: 12px; text-decoration: none; }
+        .link:hover { color: rgba(255, 255, 255, 0.92); }
+
+        .errors { margin-top: 6px; color: var(--bad); font-size: 12px; }
     </style>
 </head>
 
 <body>
-    <nav> </nav>
-    <main>
-        <h1>Witamy w aplikacji!</h1>
-	{% with messages = get_flashed_messages() %}
-	{% if messages %}
-  	  <div class="notification is-danger">
-      	  {{ messages[0] }}. Go to <a href="{{ url_for('auth.login') }}">login page</a>.
-    		</div>
-	{% endif %}
-	{% endwith %}
-        <form method="POST" action="/signup">
-            <div class="field">
-                <div class="control">
-                    <input class="input is-large" type="email" name="email" placeholder="Email" autofocus="">
-                </div>
+    <div class="card">
+        <div class="title">Rejestracja</div>
+        <div class="subtitle">Utwórz konto do dashboardu SensorPi</div>
+
+        <form method="post" action="/signup">
+            {{ form.hidden_tag() }}
+
+            <div>
+                <label for="email">Email</label>
+                {{ form.email(id="email") }}
+                {% if form.email.errors %}<div class="errors">{{ form.email.errors[0] }}</div>{% endif %}
             </div>
 
-            <div class="field">
-                <div class="control">
-                    <input class="input is-large" type="text" name="name" placeholder="Nazwa" autofocus="">
-                </div>
+            <div>
+                <label for="username">Login</label>
+                {{ form.username(id="username") }}
+                {% if form.username.errors %}<div class="errors">{{ form.username.errors[0] }}</div>{% endif %}
             </div>
 
-            <div class="field">
-                <div class="control">
-                    <input class="input is-large" type="password" name="password" placeholder="Haslo">
-                </div>
+            <div>
+                <label for="password">Hasło</label>
+                {{ form.password(id="password") }}
+                {% if form.password.errors %}<div class="errors">{{ form.password.errors[0] }}</div>{% endif %}
             </div>
 
-            <button class="button is-block is-info is-large is-fullwidth">Rejestruj sie</button>
-         </form>
-    </main>
-    <footer></footer>
+            <div>
+                <label for="password2">Powtórz hasło</label>
+                {{ form.password2(id="password2") }}
+                {% if form.password2.errors %}<div class="errors">{{ form.password2.errors[0] }}</div>{% endif %}
+            </div>
+
+            <div class="row">
+                {{ form.submit(class_="btn") }}
+                <a class="link" href="/login">Masz konto? Zaloguj się</a>
+            </div>
+        </form>
+    </div>
 </body>
 
 </html>

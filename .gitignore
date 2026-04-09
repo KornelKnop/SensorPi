@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+*.so
+.venv/
+venv/
+.env
+
+# Tests / coverage
+.pytest_cache/
+.coverage
+htmlcov/
+*.cover
+
+# Local DB and secrets (use migrate_to_appdb.py + ENV)
+*.db
+instance/
+
+# IDE / OS
+.idea/
+.vscode/
+*.swp
+.DS_Store
+
+# Stary zduplikowany katalog w repo (nie używany jako główny kod)
+SensorPi/
